@@ -1,3 +1,4 @@
+import io
 import os
 import codecs
 import difflib
@@ -212,11 +213,11 @@ class HTMLDiffHelper(BaseDiffHelper):
         return self.report
 
     def make_report(self):
-        if isinstance(self.html_file, file):
-            self.html_file.write(self.report.unicode(indent=2).encode('utf8'))
+        if isinstance(self.html_file, io.IOBase):
+            self.html_file.write(str(self.report))
         else:
             with open(self.html_file, 'w') as f:
-                f.write(self.report.unicode(indent=2).encode('utf8'))
+                f.write(str(self.report))
 
 
 class ConsoleDiffHelper(BaseDiffHelper):
